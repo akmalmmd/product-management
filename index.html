@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172554">
+  <title>Project Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">P</div><div><strong>ProjectFlow</strong><small>Management System</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <a class="nav-link active" href="#dashboard"><span>▦</span> Dashboard</a>
+      <a class="nav-link" href="#inventory"><span>▤</span> Products</a>
+      <div class="sidebar-bottom"><div class="side-note"><span class="status-dot"></span><div><b>System status</b><small id="connection-status">Checking database…</small></div></div></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><div class="eyebrow">WORKSPACE / OVERVIEW</div><h1>Inventory dashboard</h1></div>
+        <button class="primary-btn" id="add-product-top">＋ Add product</button>
+      </header>
+
+      <section id="dashboard" class="dashboard-section">
+        <div class="welcome-row"><div><h2>Good to see you</h2><p>Here's what's happening with your inventory today.</p></div><span class="today-chip" id="today"></span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total products</span><span class="stat-icon blue">▤</span></div><strong id="total-products">—</strong><small>Products in inventory</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon violet">◇</span></div><strong id="total-categories">—</strong><small>Unique product categories</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Total quantity</span><span class="stat-icon teal">▥</span></div><strong id="total-quantity">—</strong><small>Units currently in stock</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Low-stock items</span><span class="stat-icon orange">⚠</span></div><strong id="low-stock-count">—</strong><small>At or below reorder level</small></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel value-panel"><div class="panel-heading"><div><h3>Total stock value</h3><p>Current inventory valuation</p></div><span class="stat-icon teal">₹</span></div><div class="stock-value" id="stock-value">₹0.00</div><div class="value-foot"><span class="status-dot"></span> Calculated from price × quantity</div></article>
+          <article class="panel alert-panel"><div class="panel-heading"><div><h3>Reorder alerts</h3><p>Products that need attention</p></div><span class="alert-count" id="alert-count">0 alerts</span></div><div id="alert-list" class="alert-list"><div class="empty-state">No alerts to show.</div></div></article>
+        </div>
+      </section>
+
+      <section id="inventory" class="inventory-section">
+        <div class="section-heading"><div><h2>Product inventory</h2><p>Manage and track all your products in one place.</p></div><button class="primary-btn" id="add-product-main">＋ Add product</button></div>
+        <div class="panel table-panel">
+          <div class="toolbar"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search product name or category…"></label><select id="category-filter" aria-label="Filter by category"><option value="">All categories</option></select><button class="secondary-btn" id="refresh-btn">↻ Refresh</button></div>
+          <div class="table-wrap"><table><thead><tr><th>PRODUCT</th><th>CATEGORY</th><th>PRICE</th><th>QUANTITY</th><th>REORDER LEVEL</th><th>STOCK VALUE</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="products-body"><tr><td colspan="8" class="empty-state">Loading products…</td></tr></tbody></table></div>
+          <div class="table-footer"><span id="results-count">0 products</span><span>Inventory overview</span></div>
+        </div>
+      </section>
+      <footer>ProjectFlow <span>•</span> Project Management System</footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="product-modal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header"><div><div class="eyebrow">INVENTORY DETAILS</div><h2 id="modal-title">Add new product</h2><p>Enter the product information below.</p></div><button class="icon-btn" id="close-modal" aria-label="Close">×</button></div>
+      <form id="product-form">
+        <input type="hidden" id="product-id">
+        <label>Project / Product name<input id="project-name" maxlength="150" required placeholder="e.g. Laptop"></label>
+        <label>Category<input id="category" maxlength="100" required placeholder="e.g. Electronics"></label>
+        <div class="form-row"><label>Price (₹)<input id="price" type="number" min="0" max="99999999.99" step="0.01" required placeholder="0.00"></label><label>Quantity<input id="quantity" type="number" min="0" step="1" required placeholder="0"></label></div>
+        <label>Reorder level<input id="reorder-level" type="number" min="0" step="1" required placeholder="e.g. 5"></label>
+        <div class="form-error" id="form-error" role="alert"></div>
+        <div class="modal-actions"><button type="button" class="secondary-btn" id="cancel-modal">Cancel</button><button type="submit" class="primary-btn" id="save-btn">Save product</button></div>
+      </form>
+    </section>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
